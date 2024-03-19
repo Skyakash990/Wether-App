@@ -6,7 +6,7 @@
     font-family: "Poppins", sans-serif;
 }
 body{
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(130, 125, 125, 0.445);
     width: 100%;
     height: 100vh;
     overflow: hidden;
@@ -20,7 +20,7 @@ body{
 
 }
 .card{
-    background-color: rgb(8, 107, 188);
+    background-color: rgba(225, 232, 238, 0.632);
     height: 500px;
     width: 400px;
     text-align: center;
@@ -52,6 +52,6 @@ span i{
 }
 .title{
     font-size: 40px;
-    color: #fff;
+    color: #000000;
     margin-top: 20px;
 }
