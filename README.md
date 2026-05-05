@@ -5,7 +5,7 @@ Visit here to show the front-end:https://wether-ncw231ypb-skyakash990s-projects.
 
 ⚡
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
+Wether App Using React Js
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
