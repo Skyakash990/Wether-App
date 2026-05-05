@@ -1,68 +1,98 @@
 import React, { useEffect, useState } from "react";
 import "./css/style.css";
-import icon from "./icon.png";
 
 const api_key = "618511fafaea39a099b8fb6d70b9b188";
 
 const Weather = () => {
   const [searchTerm, setSearchTerm] = useState("botad");
-  const [temperature, setTemperature] = useState("22");
-  const [wind, setWind] = useState("18");
-  const [humidity, setHumidity] = useState("10");
+  const [weather, setWeather] = useState(null);
   const [date, setDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (searchTerm === "") {
-        return;
-      }
+  const fetchData = async () => {
+    if (!searchTerm) return;
 
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=Metric&appid=${api_key}`;
+    try {
+      setLoading(true);
+
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=metric&appid=${api_key}`;
       let response = await fetch(url);
       let data = await response.json();
 
-      setTemperature(`${data.main.temp}°C`);
-      setWind(`${data.wind.speed} km/h`);
-      setHumidity(`${data.main.humidity}%`);
-    };
-
-    fetchData();
-  }, [searchTerm]); // This will trigger the effect whenever `searchTerm` changes
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
+      setWeather(data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    let date1 = new Date();
-    setDate(
-      date1.getDate() + "/" + (date1.getMonth() + 1) + "/" + date1.getFullYear()
-    );
-  }, []); // This will set the date when the component mounts
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    let d = new Date();
+    setDate(`${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`);
+  }, []);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") fetchData();
+  };
+
+  // 🌈 Dynamic background class
+  const getWeatherClass = () => {
+    if (!weather) return "default";
+
+    const main = weather.weather[0].main.toLowerCase();
+
+    if (main.includes("rain")) return "rain";
+    if (main.includes("cloud")) return "clouds";
+    if (main.includes("clear")) return "clear";
+
+    return "default";
+  };
 
   return (
-    <div className="container">
+    <div className={`container ${getWeatherClass()}`}>
       <div className="card">
         <h1 className="title">Weather App</h1>
-        <div>
+
+        <div className="search-box">
           <input
             id="inpt"
-            className="city"
-            placeholder="Search"
-            type="text"
+            placeholder="Search city..."
             value={searchTerm}
-            onChange={handleInputChange}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
+
+          <button onClick={fetchData} className="btn">
+            🔍
+          </button>
         </div>
-        <div>
-          <img id="wether" src={icon} alt="Weather Icon" />
-          <div className="data">
-            <h3 className="temp">Temp:{temperature}</h3>
-            <h3 className="wind-rate">Wind:{wind}</h3>
-            <h3 className="humidity">Humidity:{humidity}</h3>
-            <h3>Date:{date}</h3>
-          </div>
-        </div>
+
+        {loading ? (
+          <div className="loader"></div>
+        ) : weather ? (
+          <>
+            {/* 🌤 Dynamic icon from API */}
+            <img
+              id="wether"
+              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt="weather"
+            />
+
+            <div className="data">
+              <h3>Temp: {weather.main.temp}°C</h3>
+              <h3>Wind: {weather.wind.speed} km/h</h3>
+              <h3>Humidity: {weather.main.humidity}%</h3>
+              <h3>{date}</h3>
+            </div>
+          </>
+        ) : (
+          <p>No data</p>
+        )}
       </div>
     </div>
   );
