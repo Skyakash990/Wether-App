@@ -1,70 +1,81 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-body{
-    background-color: #b1b1b1;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    scroll-behavior: none;
-}
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 80px;
-}
-/* 🌈 Dynamic backgrounds */
-.container {
+
+/* 🌈 Background base */
+body {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.5s;
+
+  overflow: hidden;
+}
+
+/* 🌈 Dynamic backgrounds */
+.container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 0.5s ease;
 }
 
 .container.clear {
-  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
 }
 
 .container.rain {
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
 }
 
 .container.clouds {
-  background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+  background: linear-gradient(135deg, #757f9a, #d7dde8);
 }
 
 .container.default {
-  background: linear-gradient(135deg, #6a5cff, #b6a8ff);
+  background: linear-gradient(135deg, #6a5cff, #8f94fb);
 }
 
 /* 💎 Glass Card */
 .card {
-  width: 380px;
-  padding: 25px;
-  border-radius: 25px;
+  width: 360px;
+  padding: 30px;
+  border-radius: 30px;
 
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
 
   text-align: center;
   color: white;
 }
 
+/* Title */
 .title {
-  font-size: 28px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-/* 🔍 Search box */
+/* 🔍 Search */
 .search-box {
   display: flex;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 #inpt {
@@ -72,55 +83,90 @@ body{
   height: 45px;
   border-radius: 50px;
   border: none;
-  padding-left: 15px;
+  padding: 0 15px;
 
   background: rgba(255, 255, 255, 0.2);
   color: white;
+
+  backdrop-filter: blur(10px);
+
   outline: none;
+  transition: 0.3s;
 }
 
-/* 🔘 Glass button */
+#inpt::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#inpt:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 🔘 Button */
 .btn {
-  width: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
 
   color: white;
   font-size: 18px;
+
+  transition: 0.3s;
 }
 
-/* 🌤 Icon */
+.btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* 🌤 Weather icon */
 #wether {
-  width: 150px;
-  margin-top: 10px;
+  width: 140px;
+  margin: 20px 0 10px;
 }
 
-/* 📊 Data */
+/* 📊 Data grid */
 .data {
-  margin-top: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
+/* 📦 Data cards */
 .data h3 {
-  padding: 10px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 15px;
 
-  background: rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  font-weight: 500;
+
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* ⏳ Loader */
 .loader {
   margin: 40px auto;
-  width: 40px;
-  height: 40px;
-  border: 4px solid white;
-  border-top: 4px solid transparent;
+  width: 45px;
+  height: 45px;
+
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  border-top: 4px solid white;
+
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
